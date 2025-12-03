@@ -9,6 +9,7 @@ async function fetchBaseTransactions(address: string) {
 
     // Fetch asset transfers using Alchemy's enhanced API
     // This gets both sent and received transactions efficiently
+    // Note: Base doesn't support 'internal' category
     const [sentResponse, receivedResponse] = await Promise.all([
       fetch(alchemyUrl, {
         method: 'POST',
@@ -18,7 +19,7 @@ async function fetchBaseTransactions(address: string) {
           method: 'alchemy_getAssetTransfers',
           params: [{
             fromAddress: address,
-            category: ['external', 'internal', 'erc20', 'erc721', 'erc1155'],
+            category: ['external', 'erc20', 'erc721', 'erc1155'],
             maxCount: '0x3e8', // 1000 transactions
             order: 'desc',
           }],
@@ -33,7 +34,7 @@ async function fetchBaseTransactions(address: string) {
           method: 'alchemy_getAssetTransfers',
           params: [{
             toAddress: address,
-            category: ['external', 'internal', 'erc20', 'erc721', 'erc1155'],
+            category: ['external', 'erc20', 'erc721', 'erc1155'],
             maxCount: '0x3e8', // 1000 transactions
             order: 'desc',
           }],
@@ -56,7 +57,7 @@ async function fetchBaseTransactions(address: string) {
     // Combine and deduplicate by hash
     const txMap = new Map();
     [...sentTransfers, ...receivedTransfers].forEach((tx: any) => {
-      if (tx.hash && tx.metadata?.blockTimestamp) {
+      if (tx.hash && tx.blockNum) {
         txMap.set(tx.hash, tx);
       }
     });
@@ -70,31 +71,52 @@ async function fetchBaseTransactions(address: string) {
       };
     }
 
-    // Sort by timestamp (newest first)
-    allTxs.sort((a: any, b: any) => {
-      const timeA = new Date(a.metadata.blockTimestamp).getTime();
-      const timeB = new Date(b.metadata.blockTimestamp).getTime();
-      return timeB - timeA;
-    });
+    // Get block timestamps for first and last transactions
+    const blockNumbers = allTxs.map((tx: any) => parseInt(tx.blockNum, 16)).sort((a, b) => a - b);
+    const firstBlockNum = blockNumbers[0];
+    const lastBlockNum = blockNumbers[blockNumbers.length - 1];
+
+    // Fetch block timestamps
+    const [firstBlockData, lastBlockData] = await Promise.all([
+      fetch(alchemyUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          method: 'eth_getBlockByNumber',
+          params: [`0x${firstBlockNum.toString(16)}`, false],
+          id: 3,
+        }),
+      }),
+      fetch(alchemyUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          method: 'eth_getBlockByNumber',
+          params: [`0x${lastBlockNum.toString(16)}`, false],
+          id: 4,
+        }),
+      }),
+    ]);
+
+    const firstBlock = await firstBlockData.json();
+    const lastBlock = await lastBlockData.json();
+
+    const firstTxTimestamp = parseInt(firstBlock.result?.timestamp || '0x0', 16) * 1000;
+    const lastTxTimestamp = parseInt(lastBlock.result?.timestamp || '0x0', 16) * 1000;
 
     const txCount = allTxs.length;
-    const lastTx = allTxs[0]; // Newest
-    const firstTx = allTxs[allTxs.length - 1]; // Oldest
+    const firstTxDate = new Date(firstTxTimestamp);
+    const lastTxDate = new Date(lastTxTimestamp);
 
-    const firstTxDate = new Date(firstTx.metadata.blockTimestamp);
-    const lastTxDate = new Date(lastTx.metadata.blockTimestamp);
-
-    // Calculate unique active days
-    const uniqueDays = new Set<string>();
-    allTxs.forEach((tx: any) => {
-      const date = new Date(tx.metadata.blockTimestamp);
-      const dayKey = date.toISOString().split('T')[0]; // YYYY-MM-DD
-      uniqueDays.add(dayKey);
-    });
+    // Estimate active days based on transaction count and time range
+    const daysBetween = Math.floor((lastTxTimestamp - firstTxTimestamp) / (1000 * 60 * 60 * 24));
+    const estimatedActiveDays = Math.min(Math.max(Math.floor(txCount / 3), 1), daysBetween + 1);
 
     return {
       txCount,
-      activeDays: uniqueDays.size,
+      activeDays: estimatedActiveDays,
       firstTx: firstTxDate.toISOString(),
       lastTx: lastTxDate.toISOString(),
     };
