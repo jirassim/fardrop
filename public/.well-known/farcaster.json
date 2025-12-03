@@ -11,5 +11,8 @@
     "splashImageUrl": "https://airdrop-checker-nine-mu.vercel.app/splash.png",
     "splashBackgroundColor": "#0052FF",
     "homeUrl": "https://airdrop-checker-nine-mu.vercel.app"
+  },
+  "baseBuilder": {
+    "ownerAddress": "0x53880D6bdB3b92002d49083238494FB036621652"
   }
 }
