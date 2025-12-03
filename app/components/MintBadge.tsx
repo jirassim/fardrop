@@ -51,7 +51,7 @@ export default function MintBadge({ score, basePoints, farcasterPoints, tier }: 
       // Generate metadata URL
       const metadataUrl = `${window.location.origin}/api/badge-metadata`;
 
-      // Call mint function
+      // Call mint function with gas optimization
       writeContract({
         address: CONTRACT_ADDRESS,
         abi: ABI,
@@ -64,6 +64,9 @@ export default function MintBadge({ score, basePoints, farcasterPoints, tier }: 
           tier,
           metadataUrl,
         ],
+        gas: BigInt(100000), // Set gas limit to 100k units
+        maxFeePerGas: BigInt(10000000), // 0.01 Gwei = 10,000,000 wei
+        maxPriorityFeePerGas: BigInt(5000000), // 0.005 Gwei = 5,000,000 wei
       });
     } catch (err: any) {
       setMintStatus({
