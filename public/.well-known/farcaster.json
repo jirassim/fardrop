@@ -2,5 +2,10 @@
   "name": "Airdrop Eligibility Checker",
   "description": "Check your Base & Farcaster activity for airdrop eligibility",
   "image": "https://airdrop-checker-8n5u5g3t4-jirasssims-projects.vercel.app/og-image.png",
-  "url": "https://airdrop-checker-8n5u5g3t4-jirasssims-projects.vercel.app"
+  "url": "https://airdrop-checker-8n5u5g3t4-jirasssims-projects.vercel.app",
+  "accountAssociation": {
+    "header": "eyJ0IjoiYWNjb3VudF9hc3NvY2lhdGlvbiIsInYiOiIxIiwiYWxnIjoiRVMyNTZLIn0=",
+    "payload": "eyJkb21haW4iOiJhaXJkcm9wLWNoZWNrZXItOG41dTVnM3Q0LWppcmFzc3NpbXMtcHJvamVjdHMudmVyY2VsLmFwcCIsImZpZCI6NzQwODM2LCJ0aW1lc3RhbXAiOjE3NjQ3NTYzOTQsImFkZHJlc3MiOiIweDUzODgwRDZiZEIzYjkyMDAyZDQ5MDgzMjM4NDk0RkIwMzY2MjE2NTIifQ==",
+    "signature": "0x3087ea2922be9e06619abcd10f2ba19c22480e3ccff46ee8e62084bae3de72af7bbe576f2ca9f166c85fc0cd07e44d1858582b65665cdd5e5dd898e3ed6b9e731c"
+  }
 }
