@@ -53,6 +53,40 @@ export default function Dashboard({ data, walletAddress }: DashboardProps) {
 
   return (
     <div className="mt-4 sm:mt-6 space-y-4 sm:space-y-6">
+      {/* User Profile Card */}
+      {data.farcaster.username && (
+        <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-lg shadow-lg p-4 sm:p-6 border border-purple-200 dark:border-purple-800">
+          <div className="flex items-center gap-3 sm:gap-4">
+            {data.farcaster.fid && (
+              <img
+                src={`https://res.cloudinary.com/merkle-manufactory/image/fetch/c_fill,f_jpg,w_168/${encodeURIComponent(`https://i.seadn.io/s/raw/files/${data.farcaster.fid}`)}`}
+                alt={data.farcaster.username}
+                className="w-12 h-12 sm:w-16 sm:h-16 rounded-full border-2 border-purple-400 dark:border-purple-600"
+                onError={(e) => {
+                  // Fallback to default avatar if image fails to load
+                  (e.target as HTMLImageElement).src = `https://avatar.vercel.sh/${data.farcaster.username}`;
+                }}
+              />
+            )}
+            <div className="flex-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">
+                  {data.farcaster.displayName || data.farcaster.username}
+                </h3>
+                {data.farcaster.proBadge && (
+                  <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-2 py-1 rounded-full font-semibold">
+                    PRO
+                  </span>
+                )}
+              </div>
+              <p className="text-sm sm:text-base text-purple-600 dark:text-purple-400 font-medium">
+                @{data.farcaster.username} · FID: {data.farcaster.fid}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Score Overview */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6 border border-gray-200 dark:border-gray-700">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
