@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, useSwitchChain } from 'wagmi';
 import { parseAbi } from 'viem';
+import { base } from 'wagmi/chains';
 
 const CONTRACT_ADDRESS = '0xC9395584a678cAE3dF076fA9507D3259e53BC9Eb' as `0x${string}`;
 
@@ -19,17 +20,33 @@ interface MintBadgeProps {
 }
 
 export default function MintBadge({ score, basePoints, farcasterPoints, tier }: MintBadgeProps) {
-  const { address, isConnected } = useAccount();
+  const { address, isConnected, chain } = useAccount();
   const { writeContract, data: hash, isPending, error } = useWriteContract();
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash });
+  const { switchChain } = useSwitchChain();
 
   const [mintStatus, setMintStatus] = useState<{type: 'success' | 'error' | '', message: string}>({type: '', message: ''});
+
+  const isOnBaseNetwork = chain?.id === base.id;
 
   const handleMint = async () => {
     if (!address) return;
 
     try {
       setMintStatus({type: '', message: ''});
+
+      // Check if on Base network
+      if (!isOnBaseNetwork) {
+        setMintStatus({
+          type: 'error',
+          message: '⚠️ Please switch to Base network first'
+        });
+        // Try to switch to Base
+        if (switchChain) {
+          switchChain({ chainId: base.id });
+        }
+        return;
+      }
 
       // Generate metadata URL
       const metadataUrl = `${window.location.origin}/api/badge-metadata`;
@@ -81,6 +98,12 @@ export default function MintBadge({ score, basePoints, farcasterPoints, tier }: 
         </div>
       ) : (
         <div className="space-y-3">
+          {!isOnBaseNetwork && (
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 text-yellow-700 dark:text-yellow-300 p-3 rounded-lg text-sm">
+              ⚠️ Please switch to Base network to mint your badge
+            </div>
+          )}
+
           <button
             onClick={handleMint}
             disabled={isPending || isConfirming}
@@ -99,7 +122,7 @@ export default function MintBadge({ score, basePoints, farcasterPoints, tier }: 
             ) : (
               <>
                 <span className="text-xl">🎖️</span>
-                <span>Mint Eligibility Badge NFT</span>
+                <span>{isOnBaseNetwork ? 'Mint Eligibility Badge NFT' : 'Switch to Base Network'}</span>
               </>
             )}
           </button>
