@@ -150,11 +150,11 @@ export default function Dashboard({ data, walletAddress }: DashboardProps) {
         </div>
       </div>
 
-      {/* Farcaster Metrics */}
+      {/* Social Metrics */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6 border border-gray-200 dark:border-gray-700">
         <div className="flex items-center gap-2 mb-4">
           <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">Farcaster Engagement</h3>
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">Social Engagement</h3>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -172,7 +172,7 @@ export default function Dashboard({ data, walletAddress }: DashboardProps) {
             </div>
           )}
           <div className="space-y-1">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Total Casts</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Total Posts</p>
             <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{data.farcaster.postCount}</p>
           </div>
           {data.farcaster.followerCount !== undefined && (
@@ -218,7 +218,7 @@ export default function Dashboard({ data, walletAddress }: DashboardProps) {
           const baseEstimate = data.airdropEstimate?.base;
           const farEstimate = data.airdropEstimate?.farcaster;
 
-          let text = `🎯 My Airdrop Eligibility Score: ${data.score.toFixed(0)}/200 (${data.eligibility})\n\n📊 Base: ${data.onchain.txCount} txs | ${data.onchain.activeDays} active days\n💬 Farcaster: ${data.farcaster.postCount} casts${data.farcaster.proBadge ? ' | PRO' : ''}`;
+          let text = `🎯 My Airdrop Eligibility Score: ${data.score.toFixed(0)}/200 (${data.eligibility})\n\n📊 Base: ${data.onchain.txCount} txs | ${data.onchain.activeDays} active days\n💬 Social: ${data.farcaster.postCount} posts${data.farcaster.proBadge ? ' | PRO' : ''}`;
 
           if (baseEstimate && farEstimate) {
             text += `\n\n💰 Estimated Airdrop:\n$BASE: ${baseEstimate.estimateMin.toLocaleString()}-${baseEstimate.estimateMax.toLocaleString()} (${baseEstimate.tier})\n$FAR: ${farEstimate.estimateMin.toLocaleString()}-${farEstimate.estimateMax.toLocaleString()} (${farEstimate.tier})`;
@@ -238,7 +238,7 @@ export default function Dashboard({ data, walletAddress }: DashboardProps) {
         }}
         className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-2.5 sm:py-3 px-4 sm:px-6 text-sm sm:text-base rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
       >
-        Share Results on Farcaster
+        Share Your Results
       </button>
     </div>
   );

@@ -88,14 +88,14 @@ export default function CheckerForm() {
         <div className="space-y-4">
           <div>
             <label htmlFor="input" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Enter Wallet Address or Farcaster FID
+              Enter Wallet Address or Social ID
             </label>
             <input
               id="input"
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="0x... or FID number (e.g., 3621)"
+              placeholder="0x... or social ID (e.g., 3621)"
               className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-gray-100 transition-all"
               required
               disabled={loading}
@@ -156,9 +156,9 @@ export default function CheckerForm() {
         <h4 className="font-semibold text-blue-900 dark:text-blue-300 mb-2">💡 Tips to Improve Your Score</h4>
         <ul className="text-sm text-blue-800 dark:text-blue-400 space-y-1 list-disc list-inside">
           <li>Increase transaction activity on Base network</li>
-          <li>Engage regularly on Farcaster (cast, reply, like)</li>
-          <li>Build your Farcaster following</li>
-          <li>Consider getting a Farcaster Power Badge</li>
+          <li>Engage regularly on social platforms</li>
+          <li>Build your social following</li>
+          <li>Participate in community activities</li>
           <li>Stay active consistently over time</li>
         </ul>
       </div>

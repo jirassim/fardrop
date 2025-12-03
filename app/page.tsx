@@ -9,17 +9,17 @@ export default function Home() {
             Airdrop Eligibility Checker
           </h1>
           <p className="text-sm sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Check your Base on-chain activity and Farcaster engagement to estimate your airdrop eligibility
+            Check your Base on-chain activity and social engagement to estimate your airdrop eligibility
           </p>
           <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-              <span>Base Network</span>
+              <span>On-Chain Activity</span>
             </div>
             <span>•</span>
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 rounded-full bg-purple-500"></div>
-              <span>Farcaster</span>
+              <span>Social Engagement</span>
             </div>
           </div>
         </div>
