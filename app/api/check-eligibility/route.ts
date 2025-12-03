@@ -2,15 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Helper function to fetch Base transactions using Alchemy API
 async function fetchBaseTransactions(address: string) {
-  const apiKey = process.env.ALCHEMY_API_KEY;
-
-  if (!apiKey || apiKey === 'your_alchemy_api_key_here') {
-    console.log('No Alchemy API key, using fallback');
-    return await fetchBaseTransactionsBasic(address);
-  }
+  // Use hardcoded Alchemy URL
+  const alchemyUrl = 'https://base-mainnet.g.alchemy.com/v2/e6rpbLnNMFsxR25xka4MC';
 
   try {
-    const alchemyUrl = `https://base-mainnet.g.alchemy.com/v2/${apiKey}`;
 
     // Fetch asset transfers using Alchemy's enhanced API
     // This gets both sent and received transactions efficiently
