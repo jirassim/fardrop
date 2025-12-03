@@ -1,15 +1,15 @@
 {
   "accountAssociation": {
     "header": "eyJmaWQiOjc0MDgzNiwidHlwZSI6ImF1dGgiLCJrZXkiOiIweGMyMEIzNEI4NDQ4NzUxYTZCYWI2NTRlMDdmYTBjN0M3YUNmNEFFNzAifQ",
-    "payload": "eyJkb21haW4iOiJhaXJkcm9wLWNoZWNrZXItOG41dTVnM3Q0LWppcmFzc3NpbXMtcHJvamVjdHMudmVyY2VsLmFwcCJ9",
-    "signature": "/ETm5BdTV2Egf3Se12TZK1gvmbT2dWCJ/jV8HHwkDs5ow9FqqGBTNwCJF10GdtzZJPE0vCSbwwt616+y3l7Lshw="
+    "payload": "eyJkb21haW4iOiJhaXJkcm9wLWNoZWNrZXItbmluZS1tdS52ZXJjZWwuYXBwIn0",
+    "signature": "P/5qUHs4QNZm8U1PM8GRaMyA6DiOQOzJTt64rmzywRh5mhecX++MZjYIRbCb2dWbXMfZGWPpQH3kN0wTBqWK8xs="
   },
   "frame": {
     "version": "1",
     "name": "Airdrop Eligibility Checker",
-    "iconUrl": "https://airdrop-checker-8n5u5g3t4-jirasssims-projects.vercel.app/icon.png",
-    "splashImageUrl": "https://airdrop-checker-8n5u5g3t4-jirasssims-projects.vercel.app/splash.png",
+    "iconUrl": "https://airdrop-checker-nine-mu.vercel.app/icon.png",
+    "splashImageUrl": "https://airdrop-checker-nine-mu.vercel.app/splash.png",
     "splashBackgroundColor": "#0052FF",
-    "homeUrl": "https://airdrop-checker-8n5u5g3t4-jirasssims-projects.vercel.app"
+    "homeUrl": "https://airdrop-checker-nine-mu.vercel.app"
   }
 }
