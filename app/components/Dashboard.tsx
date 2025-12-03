@@ -212,34 +212,58 @@ export default function Dashboard({ data, walletAddress }: DashboardProps) {
         />
       </div>
 
-      {/* Share Button */}
-      <button
-        onClick={() => {
-          const baseEstimate = data.airdropEstimate?.base;
-          const farEstimate = data.airdropEstimate?.farcaster;
+      {/* Share Buttons */}
+      <div className="grid grid-cols-2 gap-3">
+        <button
+          onClick={() => {
+            const baseEstimate = data.airdropEstimate?.base;
+            const farEstimate = data.airdropEstimate?.farcaster;
 
-          let text = `🎯 My Airdrop Eligibility Score: ${data.score.toFixed(0)}/200 (${data.eligibility})\n\n📊 Base: ${data.onchain.txCount} txs | ${data.onchain.activeDays} active days\n💬 Social: ${data.farcaster.postCount} posts${data.farcaster.proBadge ? ' | PRO' : ''}`;
+            let text = `🎯 My Airdrop Eligibility Score: ${data.score.toFixed(0)}/200 (${data.eligibility})\n\n📊 Base: ${data.onchain.txCount} txs | ${data.onchain.activeDays} active days\n💬 Social: ${data.farcaster.postCount} posts${data.farcaster.proBadge ? ' | PRO' : ''}`;
 
-          if (baseEstimate && farEstimate) {
-            text += `\n\n💰 Estimated Airdrop:\n$BASE: ${baseEstimate.estimateMin.toLocaleString()}-${baseEstimate.estimateMax.toLocaleString()} (${baseEstimate.tier})\n$FAR: ${farEstimate.estimateMin.toLocaleString()}-${farEstimate.estimateMax.toLocaleString()} (${farEstimate.tier})`;
-          }
+            if (baseEstimate && farEstimate) {
+              text += `\n\n💰 Estimated Airdrop:\n$BASE: ${baseEstimate.estimateMin.toLocaleString()}-${baseEstimate.estimateMax.toLocaleString()} (${baseEstimate.tier})\n$FAR: ${farEstimate.estimateMin.toLocaleString()}-${farEstimate.estimateMax.toLocaleString()} (${farEstimate.tier})`;
+            }
 
-          text += `\n\nCheck yours at:`;
+            text += `\n\nCheck yours at: ${window.location.origin}`;
 
-          if (navigator.share) {
-            navigator.share({
-              title: 'My Airdrop Eligibility',
-              text: text,
-            });
-          } else {
-            navigator.clipboard.writeText(text);
-            alert('Results copied to clipboard!');
-          }
-        }}
-        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-2.5 sm:py-3 px-4 sm:px-6 text-sm sm:text-base rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
-      >
-        Share Your Results
-      </button>
+            // Share on Farcaster
+            const farcasterUrl = `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}`;
+            window.open(farcasterUrl, '_blank');
+          }}
+          className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-2.5 sm:py-3 px-4 sm:px-6 text-sm sm:text-base rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.32 3H6.68C5.2 3 4 4.2 4 5.68v10.64C4 17.8 5.2 19 6.68 19h10.64c1.48 0 2.68-1.2 2.68-2.68V5.68C20 4.2 18.8 3 17.32 3zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+          </svg>
+          <span>Farcaster</span>
+        </button>
+
+        <button
+          onClick={() => {
+            const baseEstimate = data.airdropEstimate?.base;
+            const farEstimate = data.airdropEstimate?.farcaster;
+
+            let text = `🎯 My Airdrop Eligibility Score: ${data.score.toFixed(0)}/200 (${data.eligibility})\n\n📊 Base: ${data.onchain.txCount} txs | ${data.onchain.activeDays} active days\n💬 Social: ${data.farcaster.postCount} posts${data.farcaster.proBadge ? ' | PRO' : ''}`;
+
+            if (baseEstimate && farEstimate) {
+              text += `\n\n💰 Estimated Airdrop:\n$BASE: ${baseEstimate.estimateMin.toLocaleString()}-${baseEstimate.estimateMax.toLocaleString()} (${baseEstimate.tier})\n$FAR: ${farEstimate.estimateMin.toLocaleString()}-${farEstimate.estimateMax.toLocaleString()} (${farEstimate.tier})`;
+            }
+
+            text += `\n\nCheck yours at: ${window.location.origin}`;
+
+            // Share on X (Twitter)
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+            window.open(twitterUrl, '_blank');
+          }}
+          className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-2.5 sm:py-3 px-4 sm:px-6 text-sm sm:text-base rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+          <span>X (Twitter)</span>
+        </button>
+      </div>
     </div>
   );
 }
