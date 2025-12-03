@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { parseAbi } from 'viem';
 
-const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`;
+const CONTRACT_ADDRESS = '0xC9395584a678cAE3dF076fA9507D3259e53BC9Eb' as `0x${string}`;
 
 const ABI = parseAbi([
   'function mintBadge(address to, uint256 score, uint256 basePoints, uint256 farcasterPoints, string tier, string tokenURI) external',
