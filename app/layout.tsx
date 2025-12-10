@@ -14,21 +14,47 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const APP_URL = process.env.NEXT_PUBLIC_URL || 'https://airdrop-checker-nine-mu.vercel.app';
+
 export const metadata: Metadata = {
   title: "Airdrop Eligibility Checker",
   description: "Check your Base & Farcaster activity for airdrop eligibility estimates",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'),
+  metadataBase: new URL(APP_URL),
   openGraph: {
     title: "Airdrop Eligibility Checker",
     description: "Check your Base & Farcaster activity for airdrop eligibility",
-    images: ["/api/og"],
+    images: [{
+      url: `${APP_URL}/splash.png`,
+      width: 1200,
+      height: 800,
+      alt: "Airdrop Checker",
+    }],
   },
   other: {
-    'fc:frame': 'vNext',
-    'fc:frame:image': '/api/og',
-    'fc:frame:button:1': 'Check Eligibility',
-    'fc:frame:button:1:action': 'link',
-    'fc:frame:button:1:target': '/',
+    'fc:miniapp': JSON.stringify({
+      version: "1",
+      imageUrl: `${APP_URL}/splash.png`,
+      button: {
+        title: "Check Eligibility",
+        action: {
+          type: "launch_miniapp",
+          name: "Airdrop Checker",
+          url: APP_URL
+        }
+      }
+    }),
+    'fc:frame': JSON.stringify({
+      version: "1",
+      imageUrl: `${APP_URL}/splash.png`,
+      button: {
+        title: "Check Eligibility",
+        action: {
+          type: "launch_frame",
+          name: "Airdrop Checker",
+          url: APP_URL
+        }
+      }
+    }),
   },
 };
 
